@@ -34,7 +34,7 @@ python3 echo-bot.py
 ## :clipboard: TODO
 - [x] control volume of echo (loud/norm/quiet)
 - [x] add the ability to send files of different types
-- [ ] set up multiplayer mode
+- [x] set up multiplayer mode
 
 ## :mortar_board: Tutorial
 [Telegram-bots course ](https://stepik.org/course/120924/info) (ru)
