@@ -1,13 +1,17 @@
 from aiogram import Bot, Dispatcher, executor, types
 
-VOLUME_CONTROL:str = 'norm'
-API_TOKEN: str = '5822562559:AAGmtLjuY2_yaxZ7HjKzgCiLdTdciZuVRK8'
+# Вместо BOT TOKEN HERE нужно вставить токен вашего бота, полученный у @BotFather
+BOT_TOKEN : str = 'BOT TOKEN HERE'
 
 bot: Bot = Bot(token=API_TOKEN)
 dp: Dispatcher = Dispatcher(bot)
 
+users_volume : dict = {}
+
 async def process_start_command(message: types.Message):
     await message.answer('''Привет!\nМеня зовут Эхо-бот 📢\nНапиши мне что-нибудь!''')
+    if message.from_user.id not in users_volume:
+        users_volume[message.from_user.id] = 'norm'
 
 async def process_help_command(message: types.Message):
     await message.answer('''Напиши мне что-нибудь и в ответ я пришлю тебе твое сообщение.
@@ -17,18 +21,15 @@ async def process_help_command(message: types.Message):
 /quietecho - тихое эхо''')
 
 async def process_normecho_command(message: types.Message):
-    global VOLUME_CONTROL
-    VOLUME_CONTROL = 'norm'
+    users_volume[message.from_user.id] = 'norm'
     await message.answer('🔉')
 
 async def process_loudecho_command(message: types.Message):
-    global VOLUME_CONTROL
-    VOLUME_CONTROL = 'loud'
+    users_volume[message.from_user.id] = 'loud'
     await message.answer('🔊')
 
 async def process_quietecho_command(message: types.Message):
-    global VOLUME_CONTROL
-    VOLUME_CONTROL = 'quiet'
+    users_volume[message.from_user.id] = 'quiet'
     await message.answer('🔈')
 
 async def send_photo_echo(message: types.Message):
@@ -50,9 +51,9 @@ async def send_files(message: types.Message):
     await message.answer_document(message.document.file_id)
 
 async def send_echo(message: types.Message):
-    if VOLUME_CONTROL == 'loud':
+    if users_volume[message.from_user.id] == 'loud':
         await message.reply(message.text.upper())
-    elif VOLUME_CONTROL == 'quiet':
+    elif users_volume[message.from_user.id] == 'quiet':
         await message.reply(message.text.lower())
     else:
         await message.reply(message.text)
