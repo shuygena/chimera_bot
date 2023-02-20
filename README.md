@@ -13,7 +13,7 @@ You can also send different types of files (text-message, voice-message, photo, 
 ## :toolbox: Requirements:  
 This project was done with python-3.8.10 and aiogram-2.24  
 
-## :link: Download & Compile
+## :link: Download & Run
 Clone repository:
 ```
 git clone https://github.com/shuygena/echo_bot echo_bot
